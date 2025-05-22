@@ -1,6 +1,7 @@
 package io.kitsuayaka.addon.tools;
 
 import io.kitsuayaka.addon.types.NumberType;
+import io.kitsuayaka.core.annotations.StatusMarkers;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,7 +17,12 @@ import org.jetbrains.annotations.NotNull;
  * However, this {@code interface} allows for casting into other values, like {@code double} to {@code int} with a theoretical
  * overflow handling, using {@link #intValue(double)} (<em>for overflow handling</em>) and {@link #intValueSafe(double)}
  * (<em>throws an error on a too big value</em>).
+ *
+ * @author Ayaka (<a href="https://github.com/shy-fox">GitHub</a>)
+ * @version <code>1.6.2</code>
+ * @since <code>1.0.9</code>
  */
+@StatusMarkers.Addon
 public interface Math {
     /**
      * The maximum possible value for the type {@code byte}, <code>2<sup>7</sup>-1</code> or {@code 127}.
@@ -165,60 +171,70 @@ public interface Math {
      * A {@code static} constant {@link NumberType} holding the maximum {@code byte} value specified by {@link #BYTE_MAX}.
      *
      * @see #NT_BYTE_MIN
+     * @since <code>1.1.0</code>
      */
     NumberType NT_BYTE_MAX = new NumberType(BYTE_MAX);
     /**
      * A {@code static} constant {@link NumberType} holding the minimum {@code byte} value specified by {@link #BYTE_MIN}.
      *
      * @see #NT_BYTE_MAX
+     * @since <code>1.1.0</code>
      */
     NumberType NT_BYTE_MIN = new NumberType(BYTE_MIN);
     /**
      * A {@code static} constant {@link NumberType} holding the maximum {@code short} value specified by {@link #SHORT_MAX}.
      *
      * @see #NT_SHORT_MIN
+     * @since <code>1.1.0</code>
      */
     NumberType NT_SHORT_MAX = new NumberType(SHORT_MAX);
     /**
      * A {@code static} constant {@link NumberType} holding the minimum {@code short} value specified by {@link #SHORT_MIN}.
      *
      * @see #NT_SHORT_MAX
+     * @since <code>1.1.0</code>
      */
     NumberType NT_SHORT_MIN = new NumberType(SHORT_MIN);
     /**
      * A {@code static} constant {@link NumberType} holding the maximum {@code int} value specified by {@link #INT_MAX}.
      *
      * @see #NT_INT_MIN
+     * @since <code>1.1.0</code>
      */
     NumberType NT_INT_MAX = new NumberType(INT_MAX);
     /**
      * A {@code static} constant {@link NumberType} holding the minimum {@code int} value specified by {@link #INT_MIN}.
      *
      * @see #NT_INT_MAX
+     * @since <code>1.1.0</code>
      */
     NumberType NT_INT_MIN = new NumberType(INT_MIN);
     /**
      * A {@code static} constant {@link NumberType} holding the maximum {@code long} value specified by {@link #LONG_MAX}.
      *
      * @see #NT_LONG_MIN
+     * @since <code>1.1.0</code>
      */
     NumberType NT_LONG_MAX = new NumberType(LONG_MAX);
     /**
      * A {@code static} constant {@link NumberType} holding the minimum {@code long} value specified by {@link #LONG_MIN}.
      *
      * @see #NT_LONG_MAX
+     * @since <code>1.1.0</code>
      */
     NumberType NT_LONG_MIN = new NumberType(LONG_MIN);
     /**
      * A {@code static} constant {@link NumberType} holding the maximum {@code float} value specified by {@link #FLOAT_MAX}.
      *
      * @see #NT_FLOAT_MIN
+     * @since <code>1.1.0</code>
      */
     NumberType NT_FLOAT_MAX = new NumberType(FLOAT_MAX);
     /**
      * A {@code static} constant {@link NumberType} holding the minimum {@code float} value specified by {@link #FLOAT_MIN}.
      *
      * @see #NT_FLOAT_MAX
+     * @since <code>1.1.0</code>
      */
     NumberType NT_FLOAT_MIN = new NumberType(FLOAT_MAX);
     /**
@@ -226,6 +242,7 @@ public interface Math {
      *
      * @see #NT_DOUBLE_MIN
      * @see NumberType#MAX_VALUE
+     * @since <code>1.1.0</code>
      */
     NumberType NT_DOUBLE_MAX = new NumberType(DOUBLE_MAX);
     /**
@@ -233,6 +250,7 @@ public interface Math {
      *
      * @see #NT_DOUBLE_MAX
      * @see NumberType#MIN_VALUE
+     * @since <code>1.1.0</code>
      */
     NumberType NT_DOUBLE_MIN = new NumberType(DOUBLE_MIN);
 
@@ -240,6 +258,7 @@ public interface Math {
      * A constant {@code value} carrying the {@code double} value of {@code 0.0000000000000000}.
      *
      * @see #ZERO
+     * @since <code>1.1.0</code>
      */
     NumberType NT_ZERO = new NumberType(0.0000000000000000D);
 
@@ -253,6 +272,7 @@ public interface Math {
      * @return {@code 1} if {@code a} is greater than {@code b}, {@code -1} if {@code b} is Greater than {@code a} and {@code 0}
      * if both values are equal to each other.
      * @see #compare(double, double)
+     * @since <code>1.1.0</code>
      */
     static int compare(@NotNull NumberType a, @NotNull NumberType b) {
         return a.doubleValue() > b.doubleValue() ? 1 : (a.doubleValue() < b.doubleValue() ? -1 : 0);
@@ -266,6 +286,7 @@ public interface Math {
      * @return {@code 1} if {@code a} is greater than {@code b}, {-1} if {@code b} is Greater than {@code a} and {@code 0}
      * if both values are equal to each other.
      * @see #compare(NumberType, NumberType)
+     * @since <code>1.1.0</code>
      */
     static int compare(double a, double b) {
         return a > b ? 1 : a < b ? -1 : 0;
@@ -282,6 +303,7 @@ public interface Math {
      * @see #max(NumberType, NumberType, NumberType...)
      * @see #min(double, double, double...)
      * @see #min(NumberType, NumberType, NumberType...)
+     * @since <code>1.1.0</code>
      */
     static double max(double a, double b, double... c) {
         double recordV = a > DOUBLE_MIN ? a : DOUBLE_MIN;
@@ -301,6 +323,7 @@ public interface Math {
      * @see #max(double, double, double...)
      * @see #min(double, double, double...)
      * @see #min(NumberType, NumberType, NumberType...)
+     * @since <code>1.1.0</code>
      */
     static NumberType max(NumberType a, NumberType b, NumberType... c) {
         NumberType recordV = compare(NT_DOUBLE_MIN, a) == -1 ? a : NT_DOUBLE_MIN;
@@ -320,6 +343,7 @@ public interface Math {
      * @see #max(NumberType, NumberType, NumberType...)
      * @see #max(double, double, double...)
      * @see #min(NumberType, NumberType, NumberType...)
+     * @since <code>1.1.0</code>
      */
     static double min(double a, double b, double... c) {
         double recordV = a < DOUBLE_MAX ? a : DOUBLE_MAX;
@@ -339,6 +363,7 @@ public interface Math {
      * @see #max(NumberType, NumberType, NumberType...)
      * @see #max(double, double, double...)
      * @see #min(double, double, double...)
+     * @since <code>1.1.0</code>
      */
     static NumberType min(NumberType a, NumberType b, NumberType... c) {
         NumberType recordV = compare(NT_DOUBLE_MAX, a) == 1 ? a : NT_DOUBLE_MAX;
@@ -356,6 +381,7 @@ public interface Math {
      * @return Whether the supplied {@code value} is in the specified {@code range} or not.
      * @see #threshold(NumberType, NumberType, NumberType)
      * @see #inBounds(double, double, double)
+     * @since <code>1.1.6</code>
      */
     static boolean threshold(double value, double start, double end) {
         return start <= end && start <= value && value <= end;
@@ -370,6 +396,7 @@ public interface Math {
      * @return Whether the supplied {@code value} is in the specified {@code range} or not.
      * @see #threshold(double, double, double)
      * @see #inBounds(double, double, double)
+     * @since <code>1.1.6</code>
      */
     static boolean threshold(NumberType value, NumberType start, NumberType end) {
         return compare(start, end) != 1 && compare(start, value) != 1 && compare(value, end) != 1;
@@ -384,6 +411,7 @@ public interface Math {
      * @throws IndexOutOfBoundsException If the supplied {@code value} is outside those bounds.
      * @see #threshold(double, double, double)
      * @see #inBounds(NumberType, NumberType, NumberType)
+     * @since <code>1.1.2</code>
      */
     static void inBounds(double value, double start, double end) throws IndexOutOfBoundsException {
         if (end < value || value < start || start > end)
@@ -399,6 +427,7 @@ public interface Math {
      * @throws IndexOutOfBoundsException If the supplied {@code value} is outside those bounds.
      * @see #threshold(double, double, double)
      * @see #inBounds(double, double, double)
+     * @since <code>1.1.2</code>
      */
     static void inBounds(NumberType value, NumberType start, NumberType end) throws IndexOutOfBoundsException {
         if (compare(value, end) == 1 || compare(start, value) == 1 || compare(start, end) == 1)
@@ -415,6 +444,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code byte}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code byte}.
      * @see #byteValue(double)
+     * @since <code>1.2.3</code>
      */
     static byte byteValueSafe(double value) throws IndexOutOfBoundsException {
         return (byte) constrain(value, BYTE_MIN, BYTE_MAX, false);
@@ -427,6 +457,7 @@ public interface Math {
      * @param value The {@code value} to cast.
      * @return A converted value, constrained to the range of {@code byte}.
      * @see #byteValueSafe(double)
+     * @since <code>1.2.3</code>
      */
     static byte byteValue(double value) {
         return (byte) constrain(value, BYTE_MIN, BYTE_MAX, true);
@@ -440,6 +471,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code short}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code short}.
      * @see #shortValue(double)
+     * @since <code>1.2.3</code>
      */
     static short shortValueSafe(double value) throws IndexOutOfBoundsException {
         return (short) constrain(value, SHORT_MIN, SHORT_MAX, false);
@@ -452,6 +484,7 @@ public interface Math {
      * @param value The {@code value} to cast.
      * @return A converted value, constrained to the range of {@code short}.
      * @see #shortValueSafe(double)
+     * @since <code>1.2.3</code>
      */
     static short shortValue(double value) {
         return (short) constrain(value, SHORT_MIN, SHORT_MAX, true);
@@ -465,6 +498,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code int}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code int}.
      * @see #intValue(double)
+     * @since <code>1.2.3</code>
      */
     static int intValueSafe(double value) throws IndexOutOfBoundsException {
         return (int) constrain(value, INT_MIN, INT_MAX, false);
@@ -477,6 +511,7 @@ public interface Math {
      * @param value The {@code value} to cast.
      * @return A converted value, constrained to the range of {@code int}.
      * @see #intValueSafe(double)
+     * @since <code>1.2.3</code>
      */
     static int intValue(double value) {
         return (int) constrain(value, INT_MIN, INT_MAX, true);
@@ -490,6 +525,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code long}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code long}.
      * @see #longValue(double)
+     * @since <code>1.2.3</code>
      */
     static long longValueSafe(double value) throws IndexOutOfBoundsException {
         return (long) constrain(value, LONG_MIN, LONG_MAX, false);
@@ -502,6 +538,7 @@ public interface Math {
      * @param value The {@code value} to cast.
      * @return A converted value, constrained to the range of {@code long}.
      * @see #longValueSafe(double)
+     * @since <code>1.2.3</code>
      */
     static long longValue(double value) {
         return (long) constrain(value, LONG_MIN, LONG_MAX, true);
@@ -515,6 +552,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code float}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code float}.
      * @see #floatValue(double)
+     * @since <code>1.2.3</code>
      */
     static float floatValueSafe(double value) throws IndexOutOfBoundsException {
         return (float) constrain(value, FLOAT_MIN, FLOAT_MAX, false);
@@ -526,7 +564,8 @@ public interface Math {
      *
      * @param value The {@code value} to cast.
      * @return A converted value, constrained to the range of {@code float}.
-     * @see #floatValueSafe(double)
+     * @see #floatValueSafe(double
+     * @since <code>1.2.3</code>
      */
     static float floatValue(double value) {
         return (float) constrain(value, FLOAT_MIN, FLOAT_MAX, true);
@@ -540,6 +579,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code double}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code double}.
      *                                   <code>({@link #NEGATIVE_INFINITY}, {@link #POSITIVE_INFINITY} and {@link #NaN})</code>
+     * @since <code>1.2.3</code>
      */
     static double doubleValue(double value) throws IndexOutOfBoundsException {
         return constrain(value, DOUBLE_MIN, DOUBLE_MAX, true);
@@ -553,6 +593,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code byte}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code byte}.
      * @see #byteValue(NumberType)
+     * @since <code>1.2.3</code>
      */
     static byte byteValueSafe(NumberType value) {
         return (byte) constrain(value, NT_BYTE_MIN, NT_BYTE_MAX, false).doubleValue();
@@ -565,6 +606,7 @@ public interface Math {
      * @param value The {@code NumberType} to cast.
      * @return A converted value, constrained to the range of {@code byte}.
      * @see #byteValueSafe(NumberType)
+     * @since <code>1.2.3</code>
      */
     static byte byteValue(NumberType value) {
         return (byte) constrain(value, NT_BYTE_MIN, NT_BYTE_MAX, true).doubleValue();
@@ -578,6 +620,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code short}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code short}.
      * @see #shortValue(NumberType)
+     * @since <code>1.2.3</code>
      */
     static short shortValueSafe(NumberType value) {
         return (short) constrain(value, NT_SHORT_MIN, NT_SHORT_MAX, false).doubleValue();
@@ -590,6 +633,7 @@ public interface Math {
      * @param value The {@code NumberType} to cast.
      * @return A converted value, constrained to the range of {@code short}.
      * @see #shortValueSafe(NumberType)
+     * @since <code>1.2.3</code>
      */
     static short shortValue(NumberType value) {
         return (short) constrain(value, NT_SHORT_MIN, NT_SHORT_MAX, true).doubleValue();
@@ -603,6 +647,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code int}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code int}.
      * @see #intValue(NumberType)
+     * @since <code>1.2.3</code>
      */
     static int intValueSafe(NumberType value) {
         return (int) constrain(value, NT_INT_MIN, NT_INT_MAX, false).doubleValue();
@@ -615,6 +660,7 @@ public interface Math {
      * @param value The {@code NumberType} to cast.
      * @return A converted value, constrained to the range of {@code int}.
      * @see #intValueSafe(NumberType)
+     * @since <code>1.2.3</code>
      */
     static int intValue(NumberType value) {
         return (int) constrain(value, NT_INT_MIN, NT_INT_MAX, true).doubleValue();
@@ -628,6 +674,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code long}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code long}.
      * @see #longValue(NumberType)
+     * @since <code>1.2.3</code>
      */
     static long longValueSafe(NumberType value) {
         return (long) constrain(value, NT_LONG_MIN, NT_LONG_MAX, false).doubleValue();
@@ -640,6 +687,7 @@ public interface Math {
      * @param value The {@code NumberType} to cast.
      * @return A converted value, constrained to the range of {@code long}.
      * @see #longValueSafe(NumberType)
+     * @since <code>1.2.3</code>
      */
     static long longValue(NumberType value) {
         return (long) constrain(value, NT_LONG_MIN, NT_LONG_MAX, true).doubleValue();
@@ -653,6 +701,7 @@ public interface Math {
      * @return A converted value, constrained to the range of {@code float}.
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code float}.
      * @see #floatValue(NumberType)
+     * @since <code>1.2.3</code>
      */
     static float floatValueSafe(NumberType value) {
         return (float) constrain(value, NT_FLOAT_MIN, NT_FLOAT_MAX, false).doubleValue();
@@ -665,6 +714,7 @@ public interface Math {
      * @param value The {@code NumberType} to cast.
      * @return A converted value, constrained to the range of {@code float}.
      * @see #floatValueSafe(NumberType)
+     * @since <code>1.2.3</code>
      */
     static float floatValue(NumberType value) {
         return (float) constrain(value, NT_FLOAT_MIN, NT_FLOAT_MAX, true).doubleValue();
@@ -679,6 +729,7 @@ public interface Math {
      * @throws IndexOutOfBoundsException If the supplied value is larger than the range of {@code double}.
      *                                   <code>({@link NumberType#NEGATIVE_INFINITY},
      *                                   {@link NumberType#POSITIVE_INFINITY} and {@link NumberType#NaN})</code>
+     * @since <code>1.2.3</code>
      */
     static double doubleValue(NumberType value) {
         return constrain(value, NT_DOUBLE_MIN, NT_DOUBLE_MAX, true).doubleValue();
@@ -698,7 +749,9 @@ public interface Math {
      * @return An adjusted {@code value}, based on the supplied {@code start} and {@code end}.
      * @throws IndexOutOfBoundsException If {@code unsafe} is set to {@code false} and the supplied {@code value} is out
      *                                   of bounds.
+     * @since <code>1.2.2</code>
      */
+    @StatusMarkers.Experimental(since = "1.6.2", signatureChanged = true)
     static double constrain(double value, double start, double end, boolean unsafe) throws IndexOutOfBoundsException {
         try {
             inBounds(value, start, end);
@@ -735,6 +788,7 @@ public interface Math {
      * @throws IndexOutOfBoundsException If {@code unsafe} is set to {@code false} and the supplied {@code value} is out
      *                                   of bounds.
      */
+    @StatusMarkers.Experimental(since = "1.6.2", signatureChanged = true)
     static NumberType constrain(NumberType value, NumberType start, NumberType end, boolean unsafe) throws IndexOutOfBoundsException {
         try {
             inBounds(value, start, end);

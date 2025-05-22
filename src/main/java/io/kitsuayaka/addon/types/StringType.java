@@ -6,9 +6,9 @@ import io.kitsuayaka.addon.tools.Range;
 
 import io.kitsuayaka.core.annotations.StatusMarkers;
 
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 
@@ -81,6 +81,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #StringType()
      * @see #StringType(char)
      * @see #StringType(char[])
+     * @see #StringType(double)
      * @see #StringType(String)
      * @see #StringType(StringBuilder)
      * @see #StringType(Object)
@@ -95,6 +96,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      *
      * @see #StringType(char)
      * @see #StringType(char[])
+     * @see #StringType(double)
      * @see #StringType(String)
      * @see #StringType(StringBuilder)
      * @see #StringType(StringType)
@@ -112,6 +114,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #StringType()
      * @see #StringType(char)
      * @see #StringType(char[])
+     * @see #StringType(double)
      * @see #StringType(StringBuilder)
      * @see #StringType(StringType)
      * @see #StringType(Object)
@@ -127,6 +130,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @param c The value of a {@code StringType}.
      * @see #StringType()
      * @see #StringType(char[])
+     * @see #StringType(double)
      * @see #StringType(String)
      * @see #StringType(StringBuilder)
      * @see #StringType(StringType)
@@ -144,6 +148,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #StringType()
      * @see #StringType(char)
      * @see #StringType(char[])
+     * @see #StringType(double)
      * @see #StringType(String)
      * @see #StringType(StringType)
      * @see #StringType(Object)
@@ -172,19 +177,39 @@ public final class StringType extends BaseType<String> implements Serializable,
     }
 
     /**
-     * Creates a new instance of a {@code StringType} with a given {@code Object}, on which the method {@link Objects#toString(Object)} will be applied on.
+     * Creates a new instance of a {@code StringType} with a given {@code Object}, on which the method
+     * {@link Objects#toString(Object)} will be applied on.
      *
-     * @param o The {@code StringType} to apply the method {@code toString(Object)} on.
+     * @param o The {@code Object} to apply the method {@code toString(Object)} on.
+     * @see #StringType()
+     * @see #StringType(char)
+     * @see #StringType(char[])
+     * @see #StringType(double)
+     * @see #StringType(String)
+     * @see #StringType(StringBuilder)
+     * @see #StringType(StringType)
+     * @since <code>1.0.2</code>
+     */
+    public StringType(@Nullable Object o) {
+        this(Objects.toString(o));
+    }
+
+    /**
+     * Creates a new instance of a {@code StringType} with a given {@code double}, on which the method
+     * {@link Double#toString(double)} will be applied on.
+     *
+     * @param d The {@code double} to apply the method {@code toString(double)} on.
      * @see #StringType()
      * @see #StringType(char)
      * @see #StringType(char[])
      * @see #StringType(String)
      * @see #StringType(StringBuilder)
      * @see #StringType(StringType)
-     * @since <code>1.0.2</code>
+     * @see #StringType(Object)
+     * @since <code>1.6s.2</code>
      */
-    public StringType(@NotNull Object o) {
-        this(Objects.toString(o));
+    public StringType(double d) {
+        this(Double.toString(d));
     }
 
     // --------------------------------------------------------- Casings
@@ -289,7 +314,6 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @since <code>1.6.0</code>
      */
     @StatusMarkers.Unstable
-    @ApiStatus.Experimental
     public boolean isShorterThan(int length) {
         return length > this.length;
     }
@@ -304,7 +328,6 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @since <code>1.6.0</code>
      */
     @StatusMarkers.Unstable
-    @ApiStatus.Experimental
     public boolean isLongerThan(int length) {
         return length < this.length;
     }
@@ -913,6 +936,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #matchLengthFromEnd(String, char, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract("_, _, _ -> new")
     public static @NotNull StringType matchLengthFromStart(@NotNull String string, char filler, int length) {
         return new StringType(matchLength(string.toCharArray(), filler, length, true));
@@ -931,6 +955,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #padLengthFromEnd(String, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract("_, _, _ -> new")
     public static @NotNull StringType matchLengthFromEnd(@NotNull String string, char filler, int length) {
         return new StringType(matchLength(string.toCharArray(), filler, length, false));
@@ -948,6 +973,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #matchLengthFromEnd(String, char, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract("_, _ -> new")
     public static @NotNull StringType padLengthFromStart(@NotNull String string, int length) {
         return new StringType(matchLength(string.toCharArray(), ' ', length, true));
@@ -965,6 +991,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #matchLengthFromEnd(String, char, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract("_, _ -> new")
     public static @NotNull StringType padLengthFromEnd(@NotNull String string, int length) {
         return new StringType(matchLength(string.toCharArray(), ' ', length, false));
@@ -982,6 +1009,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #matchLengthFromEnd(char, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract(mutates = "this")
     public StringType matchLengthFromStart(char filler, int length) {
         chars = matchLength(chars, filler, length, true);
@@ -1003,6 +1031,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #matchLengthFromStart(char, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract(mutates = "this")
     public StringType matchLengthFromEnd(char filler, int length) {
         chars = matchLength(chars, filler, length, false);
@@ -1023,6 +1052,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #padLengthFromEnd(int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract(mutates = "this")
     public StringType padLengthFromStart(int length) {
         chars = matchLength(chars, ' ', length, true);
@@ -1043,6 +1073,7 @@ public final class StringType extends BaseType<String> implements Serializable,
      * @see #matchLengthFromEnd(char, int)
      * @since <code>1.6.2</code>
      */
+    @StatusMarkers.Experimental
     @Contract(mutates = "this")
     public StringType padLengthFromEnd(int length) {
         chars = matchLength(chars, ' ', length, false);
@@ -1483,6 +1514,31 @@ public final class StringType extends BaseType<String> implements Serializable,
      */
     public boolean equalsIgnoreCase(@NotNull StringType other) {
         return quickCompare(toUpperCase().chars, other.toUpperCase().chars);
+    }
+
+    /**
+     * Returns the value of any {@code BaseType}, casting it to {@code String} by using the method {@link BaseType#valueToString()}.
+     *
+     * @param baseType The type to get the value of.
+     * @return The same as if you were to call {@link BaseType#valueToString()}.
+     * @see BaseType#valueToString()
+     * @since <code>1.6.1</code>
+     */
+    public static String typeToString(@NotNull BaseType<?> baseType) {
+        return baseType.valueToString();
+    }
+
+    /**
+     *
+     * @param o
+     * @return
+     */
+    @Contract("null -> new")
+    public static @NotNull StringType toString(@Nullable Object o) {
+        if (o instanceof Number n) return new StringType(Double.valueOf(n.doubleValue()));
+        if (o instanceof BaseType<?> t) return new StringType(typeToString(t));
+        if (o instanceof Object[] os) return new StringType(Arrays.deepToString(os));
+        else return new StringType(o);
     }
 
     // --------------------------------------------------------- Serial Stuff

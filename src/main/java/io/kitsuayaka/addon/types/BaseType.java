@@ -1,6 +1,7 @@
 package io.kitsuayaka.addon.types;
 
 import io.kitsuayaka.core.annotations.StatusMarkers;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -342,9 +342,9 @@ public final class NumberType extends BaseType<Number> implements Serializable {
      * @see #sum(NumberType)
      */
     @Contract("_, _, _ -> new")
-    public static @NotNull NumberType sum(@NotNull NumberType a, @NotNull NumberType b, NumberType @NotNull ... c) {
+    public static @NotNull NumberType sum(@NotNull NumberType a, @NotNull NumberType b, @Nullable NumberType... c) {
         double internalValue = a.internalValue + b.internalValue;
-        for (NumberType d : c) internalValue += d.internalValue;
+        if (c != null) for (NumberType d : c) internalValue += d.internalValue;
         return new NumberType(internalValue);
     }
 
@@ -362,36 +362,87 @@ public final class NumberType extends BaseType<Number> implements Serializable {
         return new NumberType(internalValue);
     }
 
+    /**
+     * Subtracts the values {@code a} and {@code b} from each other, and subtracting any subsequent values given as
+     * argument {@code c}.
+     *
+     * @param a A {@code value}
+     * @param b Another {@code value}
+     * @param c A list of {@code values} <strong>(Optional)</strong>
+     * @return The difference between {@code a}, {@code b} and any subsequent {@code values}.
+     * @see #sub(NumberType)
+     */
     @Contract("_, _, _ -> new")
-    public static @NotNull NumberType sub(@NotNull NumberType a, @NotNull NumberType b, NumberType @NotNull ... c) {
+    public static @NotNull NumberType sub(@NotNull NumberType a, @NotNull NumberType b, @Nullable NumberType... c) {
         double internalValue = a.internalValue - b.internalValue;
-        for (NumberType d : c) internalValue -= d.internalValue;
+        if (c != null) for (NumberType d : c) internalValue -= d.internalValue;
         return new NumberType(internalValue);
     }
 
+    /**
+     * Multiplies the given {@code value} with this object's {@code value}.
+     *
+     * @param other The {@code value} to multiply.
+     * @return The product of {@code this value} and the given {@code value}.
+     * @see #div(NumberType)
+     */
     @Contract("_ -> new")
     public @NotNull NumberType mult(@NotNull NumberType other) {
         double internalValue = this.internalValue * other.internalValue;
         return new NumberType(internalValue);
     }
 
+    /**
+     * Divides this object's {@code value} by the given {@code value}.
+     *
+     * @param other The {@code value} to divide by.
+     * @return The division of {@code this object} and the given {@code value}.
+     * @see #mult(NumberType)
+     * @see #floorDiv(NumberType)
+     * @see #ceilDiv(NumberType)
+     */
     @Contract("_ -> new")
     public @NotNull NumberType div(@NotNull NumberType other) {
         double internalValue = this.internalValue / other.internalValue;
         return new NumberType(internalValue);
     }
 
+    /**
+     * Divides this object's {@code value} by the given {@code value}, returning the rounded down value.
+     *
+     * @param other The {@code value} to divide by.
+     * @return The division of {@code this object} and the given {@code value}, rounded down to the next smallest integer..
+     * @see #mult(NumberType)
+     * @see #ceilDiv(NumberType)
+     */
     public @NotNull @Unmodifiable NumberType floorDiv(@NotNull NumberType other) {
         double internalValue = this.internalValue / other.internalValue;
         return new NumberType(internalValue).floor();
     }
 
+    /**
+     * Divides this object's {@code value} by the given {@code value}, returning the rounded up value.
+     *
+     * @param other The {@code value} to divide by.
+     * @return The division of {@code this object} and the given {@code value}, rounded up to the next largest integer..
+     * @see #mult(NumberType)
+     * @see #floorDiv(NumberType)
+     */
     @Contract(pure = true)
     public @NotNull @Unmodifiable NumberType ceilDiv(@NotNull NumberType other) {
         double internalValue = this.internalValue / other.internalValue;
         return new NumberType(internalValue).ceil();
     }
 
+    /**
+     * Raises this object's {@code value} to the given {@code value}, using that as {@code exponent}.
+     *
+     * @param exponent The {@code value} to use as <em>exponent</em>.
+     * @return <code>this<sup>exponent</sup></code>, essentially this object's {@code value} raised to the power of
+     * {@code exponent.}
+     * @see #sqrt()
+     * @see #fact()
+     */
     @Contract("_ -> new")
     public @NotNull NumberType pow(@NotNull NumberType exponent) {
         double internalValue = 1;
@@ -399,20 +450,47 @@ public final class NumberType extends BaseType<Number> implements Serializable {
         return new NumberType(internalValue);
     }
 
+    /**
+     * Returns the {@code square root} of this object's {@code value}, essentially performing the operation
+     * <em>&radic;<code>this</code></em>.
+     *
+     * @return The {@code square root} of this object's {@code value}.
+     * @see #pow(NumberType)
+     * @see #fact()
+     */
     @Contract(pure = true)
     public @NotNull @Unmodifiable NumberType sqrt() {
         return new NumberType(java.lang.Math.sqrt(internalValue));
     }
 
-    @Contract("_ -> new")
-    public @NotNull NumberType fact(@NotNull NumberType exponent) {
+    /**
+     * Returns the operation of {@code value!}, (spoken: <em>value-factorial</em>), doing {@code n(n-1)(n-2)(n-3)...(n-m)}.
+     *
+     * @return The result of {@code value!}
+     * @see #pow(NumberType)
+     * @see #sqrt()
+     */
+    @Contract("-> new")
+    public @NotNull NumberType fact() {
         double internalValue = 1;
-        for (double d = exponent.internalValue; d >= 1; d--) internalValue *= d;
+        for (double d = this.internalValue; d >= 1; d--) internalValue *= d;
         return new NumberType(internalValue);
     }
 
     // --------------------------------------------------------- Formatting
 
+    /**
+     * Returns a {@code hexadecimal} string, converted from the {@code internal value} this object carries. The returned
+     * string will be padded with left-hand &mdash; leading &mdash; {@code 0s}.
+     * <p/>
+     * E.g. <code>2534 &mdash;length:8&mdash;&rarr; 000009E6</code>
+     *
+     * @param length The total length of the {@code target} string. If {@code length} is shorter than {@code target length},
+     *               it won't be trimmed.
+     * @return A padded (if required) {@code hexadecimal string}, converted from the {@code internal value} this object
+     * carries.
+     * @see #toHexadecimalString()
+     */
     public @NotNull String toHexadecimalString(int length) {
         String hex = toHexString(Math.longValue(this));
         if (length <= hex.length()) return hex;
@@ -421,6 +499,15 @@ public final class NumberType extends BaseType<Number> implements Serializable {
         return t.getValue();
     }
 
+    /**
+     * Returns a {@code hexadecimal} string, converted from the {@code internal value} this object carries. The returned
+     * string will <strong>not</strong> be padded with left-hand &mdash; leading &mdash; {@code 0s}.
+     * <p/>
+     * E.g. <code>2534 &mdash;&mdash;&rarr; 9E6</code>
+     *
+     * @return A {@code hexadecimal string}, that isn't padded with {@code leading 0s}.
+     * @see #toHexadecimalString(int)
+     */
     public @NotNull String toHexadecimalString() {
         return toHexString(Math.longValue(this));
     }
@@ -430,6 +517,18 @@ public final class NumberType extends BaseType<Number> implements Serializable {
     @Contract("_ -> new")
     private static @NotNull NumberType createWithBypass(double d) {
         return new NumberType(d, true);
+    }
+
+    /**
+     * Returns a {@code string} representation of this object's {@code internal value}, applying {@link Double#toString(double)}
+     * to it. Will return {@code Infinity} if the value is equal {@link #POSITIVE_INFINITY}, {@code -Infinity} if the
+     * value is equal to {@link #NEGATIVE_INFINITY} and {@code NaN} if the value is equal to {@link #NaN}.
+     *
+     * @param n The {@code value} to return the {@code internal value} of, turned into a {@code String}.
+     * @return The {@code internal value} of the given {@code object}.
+     */
+    public static String toString(@NotNull NumberType n) {
+        return Double.toString(n.internalValue);
     }
 
     // --------------------------------------------------------- Overrides
@@ -443,7 +542,7 @@ public final class NumberType extends BaseType<Number> implements Serializable {
     @Contract(value = " -> new", pure = true)
     @Override
     public char @NotNull [] toBuffer() {
-        return new char[0];
+        return valueToString().toCharArray();
     }
 
     /**

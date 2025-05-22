@@ -2,6 +2,7 @@ package io.kitsuayaka.addon.tools;
 
 import io.kitsuayaka.addon.types.*;
 import io.kitsuayaka.core.annotations.StatusMarkers;
+
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -82,12 +83,31 @@ public final class ComplexStringType {
         int i;
         int j = 0;
 
+        Range r;
+
         while ((i = container.indexOf('$')) != -1) {
-            
+            Object o = data[j];
+            while ((r = container.find("$s")).isUndefined()) {
+                replaceRange(container, r, o);
+            }
         }
     }
 
     public static StringType format(StringType container, Object... data) {
         return newInstance(container, data).format();
+    }
+
+    // --------------------------------------------------------- Helper functions
+
+    @Contract(mutates = "param1")
+    private @NotNull StringType replaceRange(@NotNull StringType container, @NotNull Range r, Object o) {
+        StringType start = container.substring(0, r.start());
+        StringType end = container.substring(r.end());
+
+        container = start;
+        container.append(o);
+        container.append(end);
+
+        return container;
     }
 }
